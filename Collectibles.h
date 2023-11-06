@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-class Player;
+class Player;//forward decleration instead of using headers, but only ptr usable
 #include "Control.h"
 #include "Macros.h"
 

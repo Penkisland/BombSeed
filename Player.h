@@ -24,6 +24,8 @@ private:
     std::string idle = Character1, state = Character1, on_what = "";
     Coord pos = Coord(0, 0);
 public:
+    int get_hp();
+    int get_bomb();
     std::string get_state();
     bool get_protect_state();
     bool get_invecible_state();

@@ -17,7 +17,7 @@ int main()
 	Player player = Player(1);
 	Map.Init(player);
 	Map.display();
-
+	UIManager::DisplayInfo(player);
 	while(true){
 		char cmd = _getch();
 		player.Move(cmd, Map);
@@ -29,6 +29,7 @@ int main()
 			}
 		}
 		Map.display();
+		UIManager::DisplayInfo(player);
 	}
 	
 	system("pause");

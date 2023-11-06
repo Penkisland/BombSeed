@@ -1,7 +1,17 @@
 #include "Player.h"
 #include "UIManager.h"
 
-//state machine determines what style of the character should be right now
+int Player::get_hp()
+{
+    return this->health;
+}
+
+int Player::get_bomb()
+{
+    return this->bomb_count;
+}
+
+// state machine determines what style of the character should be right now
 std::string Player::get_state(){
     return this->state;
 }
@@ -76,6 +86,7 @@ void Player::PlaceBomb(MapGenerator map)
 {
     Bombs bomb = Bombs(this->pos, this->bomb_range);
     map.set_element(Bomb, bomb.GetPos());
+    this->bomb_count -= 1;
     UIManager::bomb_count += 1;
     UIManager::bomb_list.push_back(bomb);
     this->on_what = Bomb;

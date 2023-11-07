@@ -15,16 +15,14 @@ void Bombs::DestroyBlocks(std::string **map, int _range, Coord _pos, Player &p)
     else
     {
         int probability = rand() % 10;
+
+        map[_pos.x][_pos.y] = BombedBrick;
         if (probability >= 5)
         {
             Get_Collectibles()->Spawn(_pos, map);
         }
-        else
-        {
-            map[_pos.x][_pos.y] = BombedBrick;
-        }
     }
-    // Recursive method of detecting blocks to explode, NOW DONT WORK, TODO
+    // Recursive method of detecting blocks to explode, but with no way to record if the block is already visited, it is likely to cause a stack overflew
     if (_pos.y > 0)
     {
         DestroyBlocks(map, _range - 1, Coord(_pos.x, _pos.y - 1), p);

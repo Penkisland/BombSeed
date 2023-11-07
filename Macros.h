@@ -53,7 +53,6 @@ public:
 			case 7:
 				return ObstacleBrick;
 			case 8:
-				return BombedBrick;
 			case 9:
 				return NullBlrick;
 			default:

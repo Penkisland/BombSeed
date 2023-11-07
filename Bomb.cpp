@@ -4,7 +4,7 @@
 
 void Bombs::DestroyBlocks(std::string **map, int _range, Coord _pos, Player &p)
 {
-    if (map[_pos.x][_pos.y] != ObstacleBrick || p.get_pos() != _pos || _pos.x == 0 || _pos.y == 0)
+    if (range == 0 || (map[_pos.x][_pos.y] != ObstacleBrick && map[_pos.x][_pos.y] != Bomb) || p.get_pos() == _pos)
     {
         return;
     }
@@ -24,11 +24,23 @@ void Bombs::DestroyBlocks(std::string **map, int _range, Coord _pos, Player &p)
             map[_pos.x][_pos.y] = BombedBrick;
         }
     }
-    //Recursive method of detecting blocks to explode, NOW DONT WORK, TODO
-    DestroyBlocks(map, _range - 1, Coord(_pos.x, _pos.y - 1), p);
-    DestroyBlocks(map, _range - 1, Coord(_pos.x, _pos.y + 1), p);
-    DestroyBlocks(map, _range - 1, Coord(_pos.x - 1, _pos.y), p);
-    DestroyBlocks(map, _range - 1, Coord(_pos.x + 1, _pos.y), p);
+    // Recursive method of detecting blocks to explode, NOW DONT WORK, TODO
+    if (_pos.y > 0)
+    {
+        DestroyBlocks(map, _range - 1, Coord(_pos.x, _pos.y - 1), p);
+    }
+    if (_pos.y < 14)
+    {
+        DestroyBlocks(map, _range - 1, Coord(_pos.x, _pos.y + 1), p);
+    }
+    if (_pos.x > 0)
+    {
+        DestroyBlocks(map, _range - 1, Coord(_pos.x - 1, _pos.y), p);
+    }
+    if (_pos.x < 14)
+    {
+        DestroyBlocks(map, _range - 1, Coord(_pos.x + 1, _pos.y), p);
+    }
 }
 void Bombs::OnBomb(MapGenerator map, Player &p)
 {
@@ -45,9 +57,10 @@ Coord Bombs::GetPos()
 
 void Bombs::CountDown(MapGenerator map, Player &p)
 {
-    //Use to count down and decide when the bomb should explode
+    // Use to count down and decide when the bomb should explode
     this->count_down -= 1;
-    if(this->count_down <= 0){
+    if (this->count_down <= 0)
+    {
         this->OnBomb(map, p);
         UIManager::bomb_count -= 1;
         UIManager::bomb_list.pop_back();

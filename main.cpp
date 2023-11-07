@@ -21,13 +21,14 @@ int main()
 	while(true){
 		char cmd = _getch();
 		player.Move(cmd, Map);
-		system("cls");
 		player.CountDownOverTime();
 		if(UIManager::bomb_count > 0){
 			for(auto& item : UIManager::bomb_list){
 				item.CountDown(Map, player);
+				std::cout << 1;
 			}
 		}
+		system("cls");
 		Map.display();
 		UIManager::DisplayInfo(player);
 	}
